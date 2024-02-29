@@ -6,6 +6,7 @@ contract AirdropDistribution {
     error ADDRESS_ZERO_DETECTED();
     error ADDRESS_ALREADY_EXISTS();
     error AIRDROP_HAS_ENDED();
+    error ACTION_HAS_ALREADY_BEEN_DONE();
 
     struct User {
         uint id;
@@ -52,6 +53,10 @@ contract AirdropDistribution {
 
     function likePost() external {
         _userAlreadyExists();
+
+        if (users[msg.sender].hasLikedPost == true) {
+            revert ACTION_HAS_ALREADY_BEEN_DONE();
+        }
         users[msg.sender].hasLikedPost = true;
         users[msg.sender].points = users[msg.sender].points + likePoints;
         _trackUserPoints();
@@ -59,6 +64,10 @@ contract AirdropDistribution {
 
     function follow() external {
         _userAlreadyExists();
+
+        if (users[msg.sender].hasFollowed == true) {
+            revert ACTION_HAS_ALREADY_BEEN_DONE();
+        }
         users[msg.sender].hasFollowed = true;
         users[msg.sender].points = users[msg.sender].points + followPoints;
         _trackUserPoints();
@@ -71,7 +80,7 @@ contract AirdropDistribution {
             isAirdropEnded = true;
         }
     }
- 
+
     function _userAlreadyExists() private view {
         if (users[msg.sender].isRegistered == true) {
             revert ADDRESS_ALREADY_EXISTS();
