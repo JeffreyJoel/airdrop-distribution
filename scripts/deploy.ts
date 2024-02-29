@@ -2,14 +2,17 @@ import { ethers } from "hardhat";
 
 async function main() {
 
+  const linkToken = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
+  const id = 9789;
+
   const token = await ethers.deployContract("TokenA");
   
   await token.waitForDeployment();
 
-  const airdrop = await ethers.deployContract("AirdropDistribution");
+  const airdrop = await ethers.deployContract("AirdropDistribution", [id, linkToken, token.target]);
 
   console.log(
-    `Lock  deployed to ${token.target}`
+    `Airdrop  deployed to ${airdrop.target}`
   );
 }
 
