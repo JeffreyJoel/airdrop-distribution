@@ -5,11 +5,11 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
-contract SwapTokenA is ERC20, Ownable, ERC20Permit {
+contract TokenA is ERC20, Ownable, ERC20Permit {
     constructor()
-        ERC20("SwapTokenA", "STA")
+        ERC20("TokenA", "TKA")
         Ownable(msg.sender)
-        ERC20Permit("SwapTokenA")
+        ERC20Permit("TokenA")
 
     {
         _mint(msg.sender, 100000 * 10 ** 18);
